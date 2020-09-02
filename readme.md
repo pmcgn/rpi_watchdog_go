@@ -33,14 +33,14 @@ The following variables are being used:
 
 In this case, the container needs to know which URL shall be monitored. An optional delay between two consecutive health checks, can be provided. This delay can be larger than the internal timelimit of 15s from the watchdog hardware. This application will count the failed responses and if the limit is reached, stop writing to the watchdog device. This will trigger the reset. Yes, this is the most brutal way to get a webinterface up and running again. You're welcome to send me pull requests.  To avoid reset loops after a reboot, there must be one successful HTTP call before a reset will be performed.
 
-To run the container with active HTTP monitoring, run the following docker command (change your URL):
-> docker run -d --name watchdog \\
-> --device /dev/watchdog:/dev/watchdog \\
-> -e WATCHDOG_START_DELAY=120 \\
-> -e HTTP_HEALTH_CHECK_URL=http://<i></i>192.168.1.10 \\
-> -e HTTP_HEALTH_CHECK_DELAY=30 \\
-> -e HTTP_HEALTH_CHECK_ERRORTHRESHOLD=10 \\
-> --restart always \\
+To run the container with active HTTP monitoring, run the following docker command (change your URL):<br/>
+> docker run -d --name watchdog \\<br/>
+> --device /dev/watchdog:/dev/watchdog \\<br/>
+> -e WATCHDOG_START_DELAY=120 \\<br/>
+> -e HTTP_HEALTH_CHECK_URL=http://<i></i>192.168.1.10 \\<br/>
+> -e HTTP_HEALTH_CHECK_DELAY=30 \\<br/>
+> -e HTTP_HEALTH_CHECK_ERRORTHRESHOLD=10 \\<br/>
+> --restart always \\<br/>
 > pmcgn/rpiwatchdog
 
 # IMPORTANT: Stopping the watchdog
