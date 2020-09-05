@@ -33,7 +33,7 @@ func main() {
 			}
 		}
 	}
-	fmt.Printf("%v: Trigger ready to fire in %v seconds.\n", time.Now().Format(time.RFC850), startDelay)
+	fmt.Printf("%v: Application ready, wait %v seconds before the watchdog hardware will be triggered.\n", time.Now().Format(time.RFC850), startDelay)
 
 	var delay int = 10
 	if delayString != "" {
@@ -77,7 +77,6 @@ func main() {
 	fmt.Printf("%v: Watchdog is now active!\n", time.Now().Format(time.RFC850))
 	for {
 
-		fmt.Println("Check write -> errorcount: ", errorCount)
 		if errorCount <= errorCountMax {
 			_, err2 := wdog.WriteString("WATCH, DOG!\n")
 
@@ -98,11 +97,12 @@ func main() {
 		select {
 		case msg := <-resultFromConnectionCheck:
 			if msg == true {
-				fmt.Println("Received true")
 				errorCount = 0
+				if !receivedAtLeastOneSuccess {
+					fmt.Printf("%v: Monitored webservice is available. Activating health check (now the RPi will perform a reset, if the monitored service is unavailable).\n", time.Now().Format(time.RFC850))
+				}
 				receivedAtLeastOneSuccess = true
 			} else {
-				fmt.Println("received false")
 				if receivedAtLeastOneSuccess {
 					errorCount++
 				}
@@ -110,7 +110,7 @@ func main() {
 		default:
 			//do nothing....
 		}
-		time.Sleep(5 * time.Second) //the watchdog hardware will trigger a reset after 15s
+		time.Sleep(5 * time.Second) //the watchdog hardware will trigger a reset after 15s without any write comamnd
 	}
 }
 
