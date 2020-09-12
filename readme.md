@@ -1,4 +1,4 @@
-# Raspberry PI Watchdog
+# Raspberry Pi Watchdog
 
 Make use of the Raspberry Pi's internal hardware watchdog via a docker container. It also supports monitoring of one webinterface. If the given webinterface is down for a given time, the watchdog will perform a hardreset of the RPi.
 
@@ -50,5 +50,5 @@ If you want to upgrade the monitored container, you have to change the restart p
 1. Change restart policy of watchdog container via: ```docker update --restart=no watchdog```
 1. On Raspian, reboot with ```sudo shutdown -r now```
 1. Upgrade/replace the monitored container
-1. Change restart policy of watchdog container ```docker update --restart=no watchdog``` 
-1. start watchdog container wit ```docker start watchdog```
+1. Change restart policy of watchdog container ```docker update --restart=always watchdog``` 
+1. start watchdog container with ```docker start watchdog```
