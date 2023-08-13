@@ -35,4 +35,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: pmcgn/rpiwatchdog:latest
+          tags: pmcgn/rpiwatchdog:0.0.1-test-githubaction
